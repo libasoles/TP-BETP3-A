@@ -11,7 +11,6 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import com.example.api_rest_call.R;
 import com.example.api_rest_call.Services.HTTPServiceBuilder;
 import com.example.api_rest_call.Services.VehiculoService;
 
@@ -22,6 +21,8 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import com.example.api_rest_call.R;
+
 public class ListaVehiculosActivity extends AppCompatActivity {
 
     ListView listView;
@@ -31,11 +32,11 @@ public class ListaVehiculosActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.vehiculos_activity);
+        setContentView(R.layout.activity_vehiculos);
         setTitle("Listado de Autos");
 
         adaptador = new AutoListAdapter(this, vehiculos);
-        listView = findViewById(android.R.id.list);
+        listView = findViewById(R.id.vehicles_list);
         listView.setAdapter(adaptador);
         listView.setClickable(true);
 
@@ -83,7 +84,7 @@ public class ListaVehiculosActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<List<Vehiculo>> call, Throwable t) {
-                Toast.makeText(ListaVehiculosActivity.this, "Hubo un error con la llamada a la API", Toast.LENGTH_LONG).show();
+                Toast.makeText(ListaVehiculosActivity.this, "Hubo un error leyendo los datos", Toast.LENGTH_LONG).show();
             }
         });
     }

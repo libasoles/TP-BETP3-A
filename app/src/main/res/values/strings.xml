@@ -1,3 +1,5 @@
 <resources>
-    <string name="app_name">API_Rest_Call</string>
+    <string name="app_name">ABM de Vehiculos</string>
+    <string name="marca">Marca</string>
+    <string name="modelo">Modelo</string>
 </resources>

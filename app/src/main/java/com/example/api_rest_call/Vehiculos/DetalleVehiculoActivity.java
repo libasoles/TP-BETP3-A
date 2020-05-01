@@ -5,10 +5,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.api_rest_call.R;
 import com.example.api_rest_call.Services.HTTPServiceBuilder;
 import com.example.api_rest_call.Services.VehiculoService;
 
@@ -16,7 +16,11 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import com.example.api_rest_call.R;
+
 public class DetalleVehiculoActivity extends AppCompatActivity {
+
+    String id_vehiculo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,13 +29,14 @@ public class DetalleVehiculoActivity extends AppCompatActivity {
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        setContentView(R.layout.detalle_vehiculo_activity);
+        setContentView(R.layout.activity_detalle_vehiculo);
+
+        id_vehiculo = getIntent().getStringExtra("id");
 
         fetchVehiculo();
     }
 
     public void fetchVehiculo() {
-        String id_vehiculo = getIntent().getStringExtra("id");
         VehiculoService vehiculoService = HTTPServiceBuilder.buildService(VehiculoService.class);
         Call<Vehiculo> http_call = vehiculoService.getVehiculo(id_vehiculo);
 
@@ -53,7 +58,7 @@ public class DetalleVehiculoActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<Vehiculo> call, Throwable t) {
-                Toast.makeText(DetalleVehiculoActivity.this, "Hubo un error con la llamada a la API", Toast.LENGTH_LONG).show();
+                Toast.makeText(DetalleVehiculoActivity.this, "Hubo un error leyendo los datos", Toast.LENGTH_LONG).show();
             }
         });
     }
@@ -63,5 +68,11 @@ public class DetalleVehiculoActivity extends AppCompatActivity {
         startActivity(intent);
 
         return true;
+    }
+
+    public void onEditButtonClick(View view) {
+        Intent intent = new Intent(this, EdicionActivity.class);
+        intent.putExtra("id", id_vehiculo);
+        startActivity(intent);
     }
 }
