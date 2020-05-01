@@ -2,7 +2,10 @@ package com.example.api_rest_call;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ListAdapter;
 import android.widget.ListView;
@@ -17,7 +20,7 @@ import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity {
 
-    ListView list;
+    ListView listView;
     ListAdapter adaptador;
     ArrayList<Vehiculo> vehiculos = new ArrayList();
 
@@ -28,10 +31,29 @@ public class MainActivity extends AppCompatActivity {
         setTitle("Listado de Autos");
 
         adaptador = new AutoListAdapter(this, vehiculos);
-        list = findViewById(android.R.id.list);
-        list.setAdapter(adaptador);
+        listView = findViewById(android.R.id.list);
+        listView.setAdapter(adaptador);
+        listView.setClickable(true);
+
+        listView.setOnItemClickListener(onItemClick());
 
         this.fetchListadoVehiculos();
+    }
+
+    private AdapterView.OnItemClickListener onItemClick() {
+        return new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Vehiculo vehiculo = (Vehiculo) adapterView.getItemAtPosition(i);
+                redirectToDetailsView(vehiculo);
+            }
+
+            private void redirectToDetailsView(Vehiculo vehiculo) {
+                Intent intent = new Intent(MainActivity.this, DetalleVehiculoActivity.class);
+                intent.putExtra("id", vehiculo.getId());
+                startActivity(intent);
+            }
+        };
     }
 
     public void fetchListadoVehiculos() {
