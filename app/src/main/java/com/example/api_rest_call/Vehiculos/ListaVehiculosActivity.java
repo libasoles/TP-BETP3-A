@@ -1,4 +1,4 @@
-package com.example.api_rest_call;
+package com.example.api_rest_call.Vehiculos;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -11,6 +11,10 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.example.api_rest_call.R;
+import com.example.api_rest_call.Services.HTTPServiceBuilder;
+import com.example.api_rest_call.Services.VehiculoService;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,7 +22,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class MainActivity extends AppCompatActivity {
+public class ListaVehiculosActivity extends AppCompatActivity {
 
     ListView listView;
     ListAdapter adaptador;
@@ -49,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
             }
 
             private void redirectToDetailsView(Vehiculo vehiculo) {
-                Intent intent = new Intent(MainActivity.this, DetalleVehiculoActivity.class);
+                Intent intent = new Intent(ListaVehiculosActivity.this, DetalleVehiculoActivity.class);
                 intent.putExtra("id", vehiculo.getId());
                 startActivity(intent);
             }
@@ -59,7 +63,7 @@ public class MainActivity extends AppCompatActivity {
     public void fetchListadoVehiculos() {
 
         VehiculoService vehiculoService = HTTPServiceBuilder.buildService(VehiculoService.class);
-        Call<List<Vehiculo>> http_call = vehiculoService.getAutos();
+        Call<List<Vehiculo>> http_call = vehiculoService.getVehiculos();
 
         http_call.enqueue(new Callback<List<Vehiculo>>() {
             @Override
@@ -79,7 +83,7 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<List<Vehiculo>> call, Throwable t) {
-                Toast.makeText(MainActivity.this, "Hubo un error con la llamada a la API", Toast.LENGTH_LONG).show();
+                Toast.makeText(ListaVehiculosActivity.this, "Hubo un error con la llamada a la API", Toast.LENGTH_LONG).show();
             }
         });
     }
