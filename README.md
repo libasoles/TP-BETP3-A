@@ -1,4 +1,4 @@
-# Trabajo Practico TP3 | CRUD Autos
+# Trabajo Practico TP3 | CRUD Vehículos
 
 ## REQUISITOS
 Realizar el CRUD de vehículos usando el siguiente Endpoint: [https://us-central1-be-tp3-a.cloudfunctions.net/app/api](https://us-central1-be-tp3-a.cloudfunctions.net/app/api)
@@ -17,8 +17,7 @@ La solucion debe contemplar todos los elementos que hemos visto hasta ahora:
 - Peticiones HTTP con retrofit.
 
 ## Fecha de entrega
-
-- Diez (10) de Mayo 2020.
+- 10 de Mayo 2020.
 
 #Integrantes: 
--
+- Guillermo Pérez
