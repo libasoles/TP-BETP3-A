@@ -2,16 +2,16 @@ package com.example.api_rest_call;
 
 import androidx.annotation.NonNull;
 
-public class Auto {
-    private int id;
-    private String marca;
-    private String modelo;
+public class Vehiculo {
+    private String id;
+    private String marca = "";
+    private String modelo = "";
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 

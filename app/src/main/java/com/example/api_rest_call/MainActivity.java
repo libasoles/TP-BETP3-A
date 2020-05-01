@@ -3,8 +3,6 @@ package com.example.api_rest_call;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
-import android.widget.Adapter;
-import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.ListAdapter;
 import android.widget.ListView;
@@ -16,73 +14,51 @@ import java.util.List;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MainActivity extends AppCompatActivity {
 
     ListView list;
     ListAdapter adaptador;
-    ArrayList<String> autos = new ArrayList<>();
-
+    ArrayList<Vehiculo> vehiculos = new ArrayList();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.vehiculos_activity);
+        setTitle("Listado de Autos");
 
-
-        adaptador = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, autos);
-
-        list = (ListView) findViewById(android.R.id.list);
-
+        adaptador = new AutoListAdapter(this, vehiculos);
+        list = findViewById(android.R.id.list);
         list.setAdapter(adaptador);
 
-        this.getListadoVehiculos();
-
+        this.fetchListadoVehiculos();
     }
 
-    public void getListadoVehiculos(){
+    public void fetchListadoVehiculos() {
 
-        // Establezco una relacion de mi app con este endpoint:
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("https://us-central1-be-tp3-a.cloudfunctions.net/")
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
+        VehiculoService vehiculoService = HTTPServiceBuilder.buildService(VehiculoService.class);
+        Call<List<Vehiculo>> http_call = vehiculoService.getAutos();
 
-
-        // Defnimos la interfaz para que utilice la base retrofit de mi aplicacion ()
-        AutoService autoService = retrofit.create(AutoService.class);
-
-
-        Call<List<Auto>> http_call = autoService.getAutos();
-
-        http_call.enqueue(new Callback<List<Auto>>() {
+        http_call.enqueue(new Callback<List<Vehiculo>>() {
             @Override
-            public void onResponse(Call<List<Auto>> call, Response<List<Auto>> response) {
-                // Si el servidor responde correctamente puedo hacer uso de la respuesta esperada:
-                autos.clear();
+            public void onResponse(Call<List<Vehiculo>> call, Response<List<Vehiculo>> response) {
+                if (response.body() == null)
+                    return;
 
-                for (Auto auto: response.body()){
-                    autos.add(auto.getMarca() + " - " + auto.getModelo());
-                }
+                populateList(response.body());
+            }
 
-                // Aviso al base adapter que cambio mi set de datos.
-                // Renderizacion general de mi ListView
+            private void populateList(List<Vehiculo> vehiculoList) {
+                vehiculos.clear();
+                vehiculos.addAll(vehiculoList);
+
                 ((BaseAdapter) adaptador).notifyDataSetChanged();
-
             }
 
             @Override
-            public void onFailure(Call<List<Auto>> call, Throwable t) {
-                // SI el servidor o la llamada no puede ejecutarse, muestro un mensaje de eror:
-                Toast.makeText(MainActivity.this,"Hubo un error con la llamada a la API", Toast.LENGTH_LONG);
-
+            public void onFailure(Call<List<Vehiculo>> call, Throwable t) {
+                Toast.makeText(MainActivity.this, "Hubo un error con la llamada a la API", Toast.LENGTH_LONG).show();
             }
         });
-
     }
-
-
-
 }
