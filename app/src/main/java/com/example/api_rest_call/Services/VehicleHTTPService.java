@@ -12,7 +12,7 @@ import retrofit2.http.GET;
 import retrofit2.http.PUT;
 import retrofit2.http.Path;
 
-public interface VehicleService {
+public interface VehicleHTTPService {
 
     String BASE_ENDPOINT = "/app/api";
 

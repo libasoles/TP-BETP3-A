@@ -4,19 +4,14 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.api_rest_call.Services.HTTPServiceBuilder;
-import com.example.api_rest_call.Services.VehicleRepository;
-import com.example.api_rest_call.Services.VehicleService;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
+import com.example.api_rest_call.Services.VehicleRepository.OnError;
+import com.example.api_rest_call.Services.VehicleRepository.OnSuccess;
+import com.example.api_rest_call.Services.VehicleRepository.VehicleRepository;
 
 import com.example.api_rest_call.R;
 
@@ -38,34 +33,26 @@ public class VehicleDetailActivity extends AppCompatActivity {
 
         repository = new VehicleRepository();
 
-        fetchVehiculo();
+        fetchVehicle(
+                (Vehicle vehicle) -> populateView(vehicle),
+                () -> displayError("Hubo un error leyendo los datos")
+        );
     }
 
-    public void fetchVehiculo() {
-        VehicleService vehicleService = HTTPServiceBuilder.buildService(VehicleService.class);
-        Call<Vehicle> http_call = vehicleService.getVehicle(vehicle_id);
+    private void fetchVehicle(OnSuccess<Vehicle> onSuccess, OnError onError) {
+        repository.getById(
+                vehicle_id,
+                onSuccess,
+                onError
+        );
+    }
 
-        http_call.enqueue(new Callback<Vehicle>() {
-            @Override
-            public void onResponse(Call<Vehicle> call, Response<Vehicle> response) {
-                Vehicle vehicle = response.body();
+    private void populateView(Vehicle vehicle) {
+        TextView marca = findViewById(R.id.marca);
+        TextView modelo = findViewById(R.id.modelo);
 
-                populateView(vehicle);
-            }
-
-            private void populateView(Vehicle vehicle) {
-                TextView marca = findViewById(R.id.marca);
-                TextView modelo = findViewById(R.id.modelo);
-
-                marca.setText(vehicle.getMarca());
-                modelo.setText(vehicle.getModelo());
-            }
-
-            @Override
-            public void onFailure(Call<Vehicle> call, Throwable t) {
-                Toast.makeText(VehicleDetailActivity.this, "Hubo un error leyendo los datos", Toast.LENGTH_LONG).show();
-            }
-        });
+        marca.setText(vehicle.getMarca());
+        modelo.setText(vehicle.getModelo());
     }
 
     public boolean onOptionsItemSelected(MenuItem item) {

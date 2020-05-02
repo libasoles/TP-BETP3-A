@@ -11,29 +11,28 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import com.example.api_rest_call.Services.HTTPServiceBuilder;
-import com.example.api_rest_call.Services.VehicleService;
-
 import java.util.ArrayList;
 import java.util.List;
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-
 import com.example.api_rest_call.R;
+import com.example.api_rest_call.Services.VehicleRepository.OnError;
+import com.example.api_rest_call.Services.VehicleRepository.OnSuccess;
+import com.example.api_rest_call.Services.VehicleRepository.VehicleRepository;
 
 public class VehicleListActivity extends AppCompatActivity {
 
     ListView listView;
     ListAdapter adaptador;
     ArrayList<Vehicle> vehicles = new ArrayList();
+    VehicleRepository repository;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_vehicles_list);
         setTitle("Listado de vehículos");
+
+        repository = new VehicleRepository();
 
         adaptador = new VehicleViewListAdapter(this, vehicles);
         listView = findViewById(R.id.vehicles_list);
@@ -42,7 +41,28 @@ public class VehicleListActivity extends AppCompatActivity {
 
         listView.setOnItemClickListener(onItemClick());
 
-        this.fetchListadoVehiculos();
+        this.fetchListadoVehiculos(
+                (List<Vehicle> vehicles) -> populateList(vehicles),
+                () -> displayError("Hubo un error leyendo los datos")
+        );
+    }
+
+    private void fetchListadoVehiculos(OnSuccess<List<Vehicle>> onSuccess, OnError onError) {
+        repository.getAll(
+                onSuccess,
+                onError
+        );
+    }
+
+    private void populateList(List<Vehicle> vehicleList) {
+        vehicles.clear();
+        vehicles.addAll(vehicleList);
+
+        ((BaseAdapter) adaptador).notifyDataSetChanged();
+    }
+
+    private void displayError(String message) {
+        Toast.makeText(VehicleListActivity.this, message, Toast.LENGTH_LONG).show();
     }
 
     private AdapterView.OnItemClickListener onItemClick() {
@@ -59,33 +79,5 @@ public class VehicleListActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         };
-    }
-
-    public void fetchListadoVehiculos() {
-
-        VehicleService vehicleService = HTTPServiceBuilder.buildService(VehicleService.class);
-        Call<List<Vehicle>> http_call = vehicleService.getVehicles();
-
-        http_call.enqueue(new Callback<List<Vehicle>>() {
-            @Override
-            public void onResponse(Call<List<Vehicle>> call, Response<List<Vehicle>> response) {
-                if (response.body() == null)
-                    return;
-
-                populateList(response.body());
-            }
-
-            private void populateList(List<Vehicle> vehicleList) {
-                vehicles.clear();
-                vehicles.addAll(vehicleList);
-
-                ((BaseAdapter) adaptador).notifyDataSetChanged();
-            }
-
-            @Override
-            public void onFailure(Call<List<Vehicle>> call, Throwable t) {
-                Toast.makeText(VehicleListActivity.this, "Hubo un error leyendo los datos", Toast.LENGTH_LONG).show();
-            }
-        });
     }
 }

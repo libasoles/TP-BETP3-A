@@ -12,7 +12,7 @@ import android.widget.Toast;
 
 import com.example.api_rest_call.R;
 import com.example.api_rest_call.Services.HTTPServiceBuilder;
-import com.example.api_rest_call.Services.VehicleService;
+import com.example.api_rest_call.Services.VehicleHTTPService;
 import com.google.android.material.textfield.TextInputEditText;
 
 import retrofit2.Call;
@@ -37,8 +37,8 @@ public class EditVehicleActivity extends AppCompatActivity {
 
     public void fetchVehiculo() {
         String id_vehiculo = getIntent().getStringExtra("id");
-        VehicleService vehicleService = HTTPServiceBuilder.buildService(VehicleService.class);
-        Call<Vehicle> http_call = vehicleService.getVehicle(id_vehiculo);
+        VehicleHTTPService vehicleHTTPService = HTTPServiceBuilder.buildService(VehicleHTTPService.class);
+        Call<Vehicle> http_call = vehicleHTTPService.getVehicle(id_vehiculo);
 
         http_call.enqueue(new Callback<Vehicle>() {
             @Override
@@ -76,12 +76,12 @@ public class EditVehicleActivity extends AppCompatActivity {
     }
 
     public boolean onSaveButtonClick(View view) {
-        VehicleService vehicleService = HTTPServiceBuilder.buildService(VehicleService.class);
+        VehicleHTTPService vehicleHTTPService = HTTPServiceBuilder.buildService(VehicleHTTPService.class);
 
         String marca = ((TextInputEditText) findViewById(R.id.marca)).getText().toString();
         String modelo = ((TextInputEditText) findViewById(R.id.modelo)).getText().toString();
 
-        Call<Void> http_call = vehicleService.updateVehicle(
+        Call<Void> http_call = vehicleHTTPService.updateVehicle(
                 vehicle.getId(),
                 marca,
                 modelo
