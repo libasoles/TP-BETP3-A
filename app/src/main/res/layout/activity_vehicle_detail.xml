@@ -41,7 +41,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Eliminar"
+            android:text="@string/delete"
             android:textAlignment="center"
             android:textColor="@color/colorSecondary"
             android:textSize="16sp" />
@@ -53,7 +53,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:onClick="onEditButtonClick"
-            android:text="Editar"
+            android:text="@string/edit"
             android:textSize="16sp" />
 
 

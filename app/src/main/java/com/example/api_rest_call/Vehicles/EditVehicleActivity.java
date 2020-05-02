@@ -1,4 +1,4 @@
-package com.example.api_rest_call.Vehiculos;
+package com.example.api_rest_call.Vehicles;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -12,16 +12,16 @@ import android.widget.Toast;
 
 import com.example.api_rest_call.R;
 import com.example.api_rest_call.Services.HTTPServiceBuilder;
-import com.example.api_rest_call.Services.VehiculoService;
+import com.example.api_rest_call.Services.VehicleService;
 import com.google.android.material.textfield.TextInputEditText;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class EdicionActivity extends AppCompatActivity {
+public class EditVehicleActivity extends AppCompatActivity {
 
-    Vehiculo vehiculo;
+    Vehicle vehicle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,41 +30,41 @@ public class EdicionActivity extends AppCompatActivity {
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        setContentView(R.layout.activity_edicion);
+        setContentView(R.layout.activity_vehicles_edition);
 
         fetchVehiculo();
     }
 
     public void fetchVehiculo() {
         String id_vehiculo = getIntent().getStringExtra("id");
-        VehiculoService vehiculoService = HTTPServiceBuilder.buildService(VehiculoService.class);
-        Call<Vehiculo> http_call = vehiculoService.getVehiculo(id_vehiculo);
+        VehicleService vehicleService = HTTPServiceBuilder.buildService(VehicleService.class);
+        Call<Vehicle> http_call = vehicleService.getVehicle(id_vehiculo);
 
-        http_call.enqueue(new Callback<Vehiculo>() {
+        http_call.enqueue(new Callback<Vehicle>() {
             @Override
-            public void onResponse(Call<Vehiculo> call, Response<Vehiculo> response) {
-                vehiculo = response.body();
+            public void onResponse(Call<Vehicle> call, Response<Vehicle> response) {
+                vehicle = response.body();
 
-                populateView(vehiculo);
+                populateView(vehicle);
             }
 
-            private void populateView(Vehiculo vehiculo) {
+            private void populateView(Vehicle vehicle) {
                 TextView marca = findViewById(R.id.marca);
                 TextView modelo = findViewById(R.id.modelo);
 
-                marca.setText(vehiculo.getMarca());
-                modelo.setText(vehiculo.getModelo());
+                marca.setText(vehicle.getMarca());
+                modelo.setText(vehicle.getModelo());
             }
 
             @Override
-            public void onFailure(Call<Vehiculo> call, Throwable t) {
-                Toast.makeText(EdicionActivity.this, "Hubo un error con la llamada a la API", Toast.LENGTH_LONG).show();
+            public void onFailure(Call<Vehicle> call, Throwable t) {
+                Toast.makeText(EditVehicleActivity.this, "Hubo un error con la llamada a la API", Toast.LENGTH_LONG).show();
             }
         });
     }
 
     public boolean onOptionsItemSelected(MenuItem item) {
-        Intent intent = new Intent(this, ListaVehiculosActivity.class);
+        Intent intent = new Intent(this, VehicleListActivity.class);
         startActivity(intent);
 
         return true;
@@ -76,13 +76,13 @@ public class EdicionActivity extends AppCompatActivity {
     }
 
     public boolean onSaveButtonClick(View view) {
-        VehiculoService vehiculoService = HTTPServiceBuilder.buildService(VehiculoService.class);
+        VehicleService vehicleService = HTTPServiceBuilder.buildService(VehicleService.class);
 
         String marca = ((TextInputEditText) findViewById(R.id.marca)).getText().toString();
         String modelo = ((TextInputEditText) findViewById(R.id.modelo)).getText().toString();
 
-        Call<Void> http_call = vehiculoService.updateVehiculo(
-                vehiculo.getId(),
+        Call<Void> http_call = vehicleService.updateVehicle(
+                vehicle.getId(),
                 marca,
                 modelo
         );
@@ -95,14 +95,14 @@ public class EdicionActivity extends AppCompatActivity {
 
             private void redirectToDetailsView() {
                 Log.i("YES!", "REDIRIGIENDO!");
-                Intent intent = new Intent(EdicionActivity.this, DetalleVehiculoActivity.class);
-                intent.putExtra("id", vehiculo.getId());
+                Intent intent = new Intent(EditVehicleActivity.this, DetalleVehiculoActivity.class);
+                intent.putExtra("id", vehicle.getId());
                 startActivity(intent);
             }
 
             @Override
             public void onFailure(Call<Void> call, Throwable t) {
-                Toast.makeText(EdicionActivity.this, "Hubo un error guardando los datos", Toast.LENGTH_LONG).show();
+                Toast.makeText(EditVehicleActivity.this, "Hubo un error guardando los datos", Toast.LENGTH_LONG).show();
                 Log.i("ERROR", t.getMessage());
             }
         });

@@ -9,9 +9,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Vehiculos.EdicionActivity"></activity>
-        <activity android:name=".Vehiculos.DetalleVehiculoActivity" />
-        <activity android:name=".Vehiculos.ListaVehiculosActivity">
+        <activity android:name=".Vehicles.EditVehicleActivity"></activity>
+        <activity android:name=".Vehicles.DetalleVehiculoActivity" />
+        <activity android:name=".Vehicles.VehicleListActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

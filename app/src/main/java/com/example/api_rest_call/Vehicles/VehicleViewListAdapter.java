@@ -1,4 +1,4 @@
-package com.example.api_rest_call.Vehiculos;
+package com.example.api_rest_call.Vehicles;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -11,23 +11,23 @@ import com.example.api_rest_call.R;
 
 import java.util.ArrayList;
 
-public class AutoListAdapter extends ArrayAdapter<Vehiculo> {
-    public AutoListAdapter(Context context, ArrayList<Vehiculo> vehiculos) {
-        super(context, 0, vehiculos);
+public class VehicleViewListAdapter extends ArrayAdapter<Vehicle> {
+    public VehicleViewListAdapter(Context context, ArrayList<Vehicle> vehicles) {
+        super(context, 0, vehicles);
     }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        Vehiculo vehiculo = getItem(position);
+        Vehicle vehicle = getItem(position);
         if (convertView == null) {
-            convertView = LayoutInflater.from(getContext()).inflate(R.layout.list_item_vehiculo, parent, false);
+            convertView = LayoutInflater.from(getContext()).inflate(R.layout.list_item_vehicle, parent, false);
         }
 
         TextView marca = convertView.findViewById(R.id.marca);
         TextView modelo = convertView.findViewById(R.id.modelo);
 
-        marca.setText(vehiculo.getMarca());
-        modelo.setText(vehiculo.getModelo());
+        marca.setText(vehicle.getMarca());
+        modelo.setText(vehicle.getModelo());
 
         return convertView;
     }

@@ -1,5 +1,9 @@
 <resources>
     <string name="app_name">ABM de Vehiculos</string>
-    <string name="marca">Marca</string>
-    <string name="modelo">Modelo</string>
+    <string name="brand">Marca</string>
+    <string name="model">Modelo</string>
+    <string name="save">Guardar</string>
+    <string name="cancel">Cancelar</string>
+    <string name="delete">Eliminar</string>
+    <string name="edit">Editar</string>
 </resources>

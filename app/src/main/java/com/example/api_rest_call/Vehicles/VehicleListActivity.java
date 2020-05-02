@@ -1,4 +1,4 @@
-package com.example.api_rest_call.Vehiculos;
+package com.example.api_rest_call.Vehicles;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -12,7 +12,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.example.api_rest_call.Services.HTTPServiceBuilder;
-import com.example.api_rest_call.Services.VehiculoService;
+import com.example.api_rest_call.Services.VehicleService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,19 +23,19 @@ import retrofit2.Response;
 
 import com.example.api_rest_call.R;
 
-public class ListaVehiculosActivity extends AppCompatActivity {
+public class VehicleListActivity extends AppCompatActivity {
 
     ListView listView;
     ListAdapter adaptador;
-    ArrayList<Vehiculo> vehiculos = new ArrayList();
+    ArrayList<Vehicle> vehicles = new ArrayList();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_vehiculos);
-        setTitle("Listado de Autos");
+        setContentView(R.layout.activity_vehicles_list);
+        setTitle("Listado de vehículos");
 
-        adaptador = new AutoListAdapter(this, vehiculos);
+        adaptador = new VehicleViewListAdapter(this, vehicles);
         listView = findViewById(R.id.vehicles_list);
         listView.setAdapter(adaptador);
         listView.setClickable(true);
@@ -49,13 +49,13 @@ public class ListaVehiculosActivity extends AppCompatActivity {
         return new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Vehiculo vehiculo = (Vehiculo) adapterView.getItemAtPosition(i);
-                redirectToDetailsView(vehiculo);
+                Vehicle vehicle = (Vehicle) adapterView.getItemAtPosition(i);
+                redirectToDetailsView(vehicle);
             }
 
-            private void redirectToDetailsView(Vehiculo vehiculo) {
-                Intent intent = new Intent(ListaVehiculosActivity.this, DetalleVehiculoActivity.class);
-                intent.putExtra("id", vehiculo.getId());
+            private void redirectToDetailsView(Vehicle vehicle) {
+                Intent intent = new Intent(VehicleListActivity.this, DetalleVehiculoActivity.class);
+                intent.putExtra("id", vehicle.getId());
                 startActivity(intent);
             }
         };
@@ -63,28 +63,28 @@ public class ListaVehiculosActivity extends AppCompatActivity {
 
     public void fetchListadoVehiculos() {
 
-        VehiculoService vehiculoService = HTTPServiceBuilder.buildService(VehiculoService.class);
-        Call<List<Vehiculo>> http_call = vehiculoService.getVehiculos();
+        VehicleService vehicleService = HTTPServiceBuilder.buildService(VehicleService.class);
+        Call<List<Vehicle>> http_call = vehicleService.getVehicles();
 
-        http_call.enqueue(new Callback<List<Vehiculo>>() {
+        http_call.enqueue(new Callback<List<Vehicle>>() {
             @Override
-            public void onResponse(Call<List<Vehiculo>> call, Response<List<Vehiculo>> response) {
+            public void onResponse(Call<List<Vehicle>> call, Response<List<Vehicle>> response) {
                 if (response.body() == null)
                     return;
 
                 populateList(response.body());
             }
 
-            private void populateList(List<Vehiculo> vehiculoList) {
-                vehiculos.clear();
-                vehiculos.addAll(vehiculoList);
+            private void populateList(List<Vehicle> vehicleList) {
+                vehicles.clear();
+                vehicles.addAll(vehicleList);
 
                 ((BaseAdapter) adaptador).notifyDataSetChanged();
             }
 
             @Override
-            public void onFailure(Call<List<Vehiculo>> call, Throwable t) {
-                Toast.makeText(ListaVehiculosActivity.this, "Hubo un error leyendo los datos", Toast.LENGTH_LONG).show();
+            public void onFailure(Call<List<Vehicle>> call, Throwable t) {
+                Toast.makeText(VehicleListActivity.this, "Hubo un error leyendo los datos", Toast.LENGTH_LONG).show();
             }
         });
     }

@@ -1,31 +1,35 @@
 package com.example.api_rest_call.Services;
 
-import com.example.api_rest_call.Vehiculos.Vehiculo;
+import com.example.api_rest_call.Vehicles.Vehicle;
 
 import java.util.List;
 
 import retrofit2.Call;
+import retrofit2.http.DELETE;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.PUT;
 import retrofit2.http.Path;
 
-public interface VehiculoService {
+public interface VehicleService {
 
     String BASE_ENDPOINT = "/app/api";
 
     @GET(BASE_ENDPOINT + "/read")
-    Call<List<Vehiculo>> getVehiculos();
+    Call<List<Vehicle>> getVehicles();
 
     @GET(BASE_ENDPOINT + "/read/{id}")
-    Call<Vehiculo> getVehiculo(@Path("id") String id);
+    Call<Vehicle> getVehicle(@Path("id") String id);
 
     @FormUrlEncoded
     @PUT(BASE_ENDPOINT + "/update/{id}")
-    Call<Void> updateVehiculo(
+    Call<Void> updateVehicle(
             @Path("id") String id,
             @Field("marca") String marca,
             @Field("modelo") String modelo
     );
+
+    @DELETE(BASE_ENDPOINT + "/delete/{id}")
+    Call<Void> deleteVehicle(@Path("id") String id);
 }

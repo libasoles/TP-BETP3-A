@@ -1,8 +1,8 @@
-package com.example.api_rest_call.Vehiculos;
+package com.example.api_rest_call.Vehicles;
 
 import androidx.annotation.NonNull;
 
-public class Vehiculo {
+public class Vehicle {
     private String id;
     private String marca = "";
     private String modelo = "";

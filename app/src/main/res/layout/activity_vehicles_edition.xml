@@ -19,7 +19,7 @@
                 android:id="@+id/marca"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/marca" />
+                android:hint="@string/brand" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -30,7 +30,7 @@
                 android:id="@+id/modelo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/modelo" />
+                android:hint="@string/model" />
 
         </com.google.android.material.textfield.TextInputLayout>
     </LinearLayout>
@@ -48,7 +48,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:onClick="onCancelButtonClick"
-            android:text="Cancelar"
+            android:text="@string/cancel"
             android:textColor="@color/colorSecondary"
             android:textSize="16sp" />
 
@@ -59,7 +59,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:onClick="onSaveButtonClick"
-            android:text="Guardar"
+            android:text="@string/save"
             android:textAlignment="center"
             android:textSize="16sp" />
 
