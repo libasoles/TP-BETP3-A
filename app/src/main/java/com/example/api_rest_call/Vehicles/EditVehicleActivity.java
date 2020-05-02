@@ -29,7 +29,7 @@ public class EditVehicleActivity extends AppCompatActivity {
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        setContentView(R.layout.activity_vehicles_edition);
+        setContentView(R.layout.loading);
 
         String vehicle_id = getIntent().getStringExtra("id");
 
@@ -50,6 +50,8 @@ public class EditVehicleActivity extends AppCompatActivity {
 
     private void populateView(Vehicle vehicle) {
         this.vehicle = vehicle;
+
+        setContentView(R.layout.activity_vehicles_edition);
 
         TextView marca = findViewById(R.id.marca);
         TextView modelo = findViewById(R.id.modelo);
