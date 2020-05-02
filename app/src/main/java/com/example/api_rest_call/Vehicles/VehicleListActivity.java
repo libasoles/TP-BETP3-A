@@ -54,7 +54,7 @@ public class VehicleListActivity extends AppCompatActivity {
             }
 
             private void redirectToDetailsView(Vehicle vehicle) {
-                Intent intent = new Intent(VehicleListActivity.this, DetalleVehiculoActivity.class);
+                Intent intent = new Intent(VehicleListActivity.this, VehicleDetailActivity.class);
                 intent.putExtra("id", vehicle.getId());
                 startActivity(intent);
             }

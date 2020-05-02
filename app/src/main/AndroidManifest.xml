@@ -10,7 +10,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".Vehicles.EditVehicleActivity"></activity>
-        <activity android:name=".Vehicles.DetalleVehiculoActivity" />
+        <activity android:name=".Vehicles.VehicleDetailActivity" />
         <activity android:name=".Vehicles.VehicleListActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

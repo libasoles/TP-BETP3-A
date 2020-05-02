@@ -4,12 +4,14 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.api_rest_call.Services.HTTPServiceBuilder;
+import com.example.api_rest_call.Services.VehicleRepository;
 import com.example.api_rest_call.Services.VehicleService;
 
 import retrofit2.Call;
@@ -18,9 +20,10 @@ import retrofit2.Response;
 
 import com.example.api_rest_call.R;
 
-public class DetalleVehiculoActivity extends AppCompatActivity {
+public class VehicleDetailActivity extends AppCompatActivity {
 
-    String id_vehiculo;
+    String vehicle_id;
+    VehicleRepository repository;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,14 +34,16 @@ public class DetalleVehiculoActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_vehicle_detail);
 
-        id_vehiculo = getIntent().getStringExtra("id");
+        vehicle_id = getIntent().getStringExtra("id");
+
+        repository = new VehicleRepository();
 
         fetchVehiculo();
     }
 
     public void fetchVehiculo() {
         VehicleService vehicleService = HTTPServiceBuilder.buildService(VehicleService.class);
-        Call<Vehicle> http_call = vehicleService.getVehicle(id_vehiculo);
+        Call<Vehicle> http_call = vehicleService.getVehicle(vehicle_id);
 
         http_call.enqueue(new Callback<Vehicle>() {
             @Override
@@ -58,7 +63,7 @@ public class DetalleVehiculoActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<Vehicle> call, Throwable t) {
-                Toast.makeText(DetalleVehiculoActivity.this, "Hubo un error leyendo los datos", Toast.LENGTH_LONG).show();
+                Toast.makeText(VehicleDetailActivity.this, "Hubo un error leyendo los datos", Toast.LENGTH_LONG).show();
             }
         });
     }
@@ -72,7 +77,24 @@ public class DetalleVehiculoActivity extends AppCompatActivity {
 
     public void onEditButtonClick(View view) {
         Intent intent = new Intent(this, EditVehicleActivity.class);
-        intent.putExtra("id", id_vehiculo);
+        intent.putExtra("id", vehicle_id);
         startActivity(intent);
+    }
+
+    public void onDeleteButtonClick(View view) {
+        repository.delete(
+                vehicle_id,
+                (Void v) -> redirectToVehiclesList(),
+                () -> displayError("Hubo un error leyendo los datos")
+        );
+    }
+
+    private void redirectToVehiclesList() {
+        Intent intent = new Intent(this, VehicleListActivity.class);
+        startActivity(intent);
+    }
+
+    private void displayError(String message) {
+        Toast.makeText(VehicleDetailActivity.this, message, Toast.LENGTH_LONG).show();
     }
 }

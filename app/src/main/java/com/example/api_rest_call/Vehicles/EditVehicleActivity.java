@@ -95,7 +95,7 @@ public class EditVehicleActivity extends AppCompatActivity {
 
             private void redirectToDetailsView() {
                 Log.i("YES!", "REDIRIGIENDO!");
-                Intent intent = new Intent(EditVehicleActivity.this, DetalleVehiculoActivity.class);
+                Intent intent = new Intent(EditVehicleActivity.this, VehicleDetailActivity.class);
                 intent.putExtra("id", vehicle.getId());
                 startActivity(intent);
             }
