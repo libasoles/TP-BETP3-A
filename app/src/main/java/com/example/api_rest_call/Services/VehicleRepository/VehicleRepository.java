@@ -57,6 +57,23 @@ public class VehicleRepository {
         });
     }
 
+    public void create(Vehicle vehicle, OnSuccess<Void> onSuccessCallback, OnError onErrorCallback) {
+        Call<Void> http_call = vehicleHTTPService.createVehicle(vehicle);
+
+        http_call.enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+                onSuccessCallback.execute(null);
+            }
+
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+                Log.i("HTTP ERROR", t.getMessage());
+                onErrorCallback.execute();
+            }
+        });
+    }
+
     public void update(Vehicle vehicle, OnSuccess<Void> onSuccessCallback, OnError onErrorCallback) {
         Call<Void> http_call = vehicleHTTPService.updateVehicle(
                 vehicle.getId(),

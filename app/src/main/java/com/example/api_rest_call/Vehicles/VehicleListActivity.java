@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
@@ -79,5 +80,15 @@ public class VehicleListActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         };
+    }
+
+    public void onCreateButtonClicked(View view) {
+        Log.i("***", "click");
+        redirectToCreateView();
+    }
+
+    private void redirectToCreateView() {
+        Intent intent = new Intent(this, CreateVehicleActivity.class);
+        startActivity(intent);
     }
 }

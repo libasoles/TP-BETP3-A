@@ -1,63 +1,31 @@
 package com.example.api_rest_call.Vehicles;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.example.api_rest_call.R;
-import com.example.api_rest_call.Services.VehicleRepository.OnError;
-import com.example.api_rest_call.Services.VehicleRepository.OnSuccess;
 import com.example.api_rest_call.Services.VehicleRepository.VehicleRepository;
 import com.google.android.material.textfield.TextInputEditText;
 
-public class EditVehicleActivity extends AppCompatActivity {
+public class CreateVehicleActivity extends AppCompatActivity {
 
-    Vehicle vehicle;
     VehicleRepository repository;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setTitle("Edición de vehículo");
+        setTitle("Creación de vehículo");
 
         repository = new VehicleRepository();
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        setContentView(R.layout.loading);
-
-        String vehicle_id = getIntent().getStringExtra("id");
-
-        fetchVehicle(
-                vehicle_id,
-                (Vehicle vehicle) -> populateView(vehicle),
-                () -> displayError("Hubo un error leyendo los datos")
-        );
-    }
-
-    private void fetchVehicle(String id, OnSuccess<Vehicle> onSuccess, OnError onError) {
-        repository.getById(
-                id,
-                onSuccess,
-                onError
-        );
-    }
-
-    private void populateView(Vehicle vehicle) {
-        this.vehicle = vehicle;
-
-        setContentView(R.layout.activity_vehicle_edition);
-
-        TextView marca = findViewById(R.id.marca);
-        TextView modelo = findViewById(R.id.modelo);
-
-        marca.setText(vehicle.getMarca());
-        modelo.setText(vehicle.getModelo());
+        setContentView(R.layout.activity_create_vehicle);
     }
 
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -76,21 +44,21 @@ public class EditVehicleActivity extends AppCompatActivity {
         String marca = ((TextInputEditText) findViewById(R.id.marca)).getText().toString();
         String modelo = ((TextInputEditText) findViewById(R.id.modelo)).getText().toString();
 
+        Vehicle vehicle = new Vehicle();
         vehicle.setMarca(marca);
         vehicle.setModelo(modelo);
 
-        repository.update(
+        repository.create(
                 vehicle,
-                (Void v) -> redirectToDetailsView(),
+                (Void v) -> redirectToListView(),
                 () -> displayError("Hubo un error guardando los datos")
         );
 
         return true;
     }
 
-    private void redirectToDetailsView() {
-        Intent intent = new Intent(this, VehicleDetailActivity.class);
-        intent.putExtra("id", vehicle.getId());
+    private void redirectToListView() {
+        Intent intent = new Intent(this, VehicleListActivity.class);
         startActivity(intent);
     }
 

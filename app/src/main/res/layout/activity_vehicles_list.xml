@@ -1,4 +1,5 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -14,6 +15,17 @@
             android:id="@+id/vehicles_list"
             android:layout_width="fill_parent"
             android:layout_height="550dp" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            app:fabCustomSize="50dp"
+            android:layout_gravity="end|bottom"
+            android:layout_marginEnd="16dp"
+            android:contentDescription="@string/create"
+            android:onClick="onCreateButtonClicked"
+            android:src="@drawable/ic_add_white_24dp" />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

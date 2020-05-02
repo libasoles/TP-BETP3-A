@@ -42,7 +42,7 @@
         android:gravity="bottom">
 
         <Button
-            android:id="@+id/editar"
+            android:id="@+id/cancel"
             style="@style/Widget.MaterialComponents.Button.TextButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -53,7 +53,7 @@
             android:textSize="16sp" />
 
         <Button
-            android:id="@+id/eliminar"
+            android:id="@+id/save"
             style="@style/Widget.MaterialComponents.Button.TextButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
