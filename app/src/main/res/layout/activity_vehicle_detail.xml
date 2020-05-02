@@ -41,9 +41,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:onClick="onDeleteButtonClick"
             android:text="@string/delete"
             android:textAlignment="center"
-            android:onClick="onDeleteButtonClick"
             android:textColor="@color/colorSecondary"
             android:textSize="16sp" />
 
@@ -56,7 +56,6 @@
             android:onClick="onEditButtonClick"
             android:text="@string/edit"
             android:textSize="16sp" />
-
 
     </LinearLayout>
 

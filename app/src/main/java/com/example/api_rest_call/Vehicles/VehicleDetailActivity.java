@@ -62,6 +62,7 @@ public class VehicleDetailActivity extends AppCompatActivity {
 
     public void onEditButtonClick(View view) {
         Intent intent = new Intent(this, EditVehicleActivity.class);
+
         intent.putExtra("id", vehicle.getId());
         startActivity(intent);
     }

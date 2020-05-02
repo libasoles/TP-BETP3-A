@@ -45,8 +45,13 @@ public class CreateVehicleActivity extends AppCompatActivity {
         String modelo = ((TextInputEditText) findViewById(R.id.modelo)).getText().toString();
 
         Vehicle vehicle = new Vehicle();
-        vehicle.setMarca(marca);
-        vehicle.setModelo(modelo);
+        try {
+            vehicle.setMarca(marca);
+            vehicle.setModelo(modelo);
+        } catch (IllegalArgumentException e) {
+            displayError("Todos los campos son obligatorios");
+            return false;
+        }
 
         repository.create(
                 vehicle,

@@ -42,7 +42,6 @@ public class EditVehicleActivity extends AppCompatActivity {
 
     private void populateView(Vehicle vehicle) {
         this.vehicle = vehicle;
-
         setContentView(R.layout.activity_vehicle_edition);
 
         TextView marca = findViewById(R.id.marca);
@@ -68,8 +67,13 @@ public class EditVehicleActivity extends AppCompatActivity {
         String marca = ((TextInputEditText) findViewById(R.id.marca)).getText().toString();
         String modelo = ((TextInputEditText) findViewById(R.id.modelo)).getText().toString();
 
-        vehicle.setMarca(marca);
-        vehicle.setModelo(modelo);
+        try {
+            vehicle.setMarca(marca);
+            vehicle.setModelo(modelo);
+        } catch (IllegalArgumentException e) {
+            displayError("Todos los campos son obligatorios");
+            return false;
+        }
 
         repository.update(
                 vehicle,

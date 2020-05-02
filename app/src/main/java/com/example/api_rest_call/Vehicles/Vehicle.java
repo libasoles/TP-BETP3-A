@@ -4,8 +4,8 @@ import androidx.annotation.NonNull;
 
 public class Vehicle {
     private String id;
-    private String marca = "";
-    private String modelo = "";
+    private String marca;
+    private String modelo;
 
     public String getId() {
         return id;
@@ -20,6 +20,9 @@ public class Vehicle {
     }
 
     public void setMarca(String marca) {
+        if (marca.isEmpty())
+            throw new IllegalArgumentException();
+
         this.marca = marca;
     }
 
@@ -28,6 +31,9 @@ public class Vehicle {
     }
 
     public void setModelo(String modelo) {
+        if (modelo.isEmpty())
+            throw new IllegalArgumentException();
+
         this.modelo = modelo;
     }
 
