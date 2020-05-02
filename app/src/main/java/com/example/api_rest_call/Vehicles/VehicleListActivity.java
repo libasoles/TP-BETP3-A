@@ -22,7 +22,7 @@ import com.example.api_rest_call.Services.VehicleRepository.VehicleRepository;
 public class VehicleListActivity extends AppCompatActivity {
 
     ListView listView;
-    ListAdapter adaptador;
+    ListAdapter viewListAdapter;
     ArrayList<Vehicle> vehicles = new ArrayList();
     VehicleRepository repository;
 
@@ -34,31 +34,31 @@ public class VehicleListActivity extends AppCompatActivity {
 
         repository = new VehicleRepository();
 
-        adaptador = new VehicleViewListAdapter(this, vehicles);
-        listView = findViewById(R.id.vehicles_list);
-        listView.setAdapter(adaptador);
-        listView.setClickable(true);
+        setView();
 
-        listView.setOnItemClickListener(onItemClick());
-
-        this.fetchListadoVehiculos(
+        this.fetchVehiclesList(
                 (List<Vehicle> vehicles) -> populateList(vehicles),
                 () -> displayError("Hubo un error leyendo los datos")
         );
     }
 
-    private void fetchListadoVehiculos(OnSuccess<List<Vehicle>> onSuccess, OnError onError) {
-        repository.getAll(
-                onSuccess,
-                onError
-        );
+    private void setView() {
+        viewListAdapter = new VehicleViewListAdapter(this, vehicles);
+        listView = findViewById(R.id.vehicles_list);
+        listView.setAdapter(viewListAdapter);
+        listView.setClickable(true);
+        listView.setOnItemClickListener(onItemClick());
+    }
+
+    private void fetchVehiclesList(OnSuccess<List<Vehicle>> onSuccess, OnError onError) {
+        repository.getAll(onSuccess, onError);
     }
 
     private void populateList(List<Vehicle> vehicleList) {
         vehicles.clear();
         vehicles.addAll(vehicleList);
 
-        ((BaseAdapter) adaptador).notifyDataSetChanged();
+        ((BaseAdapter) viewListAdapter).notifyDataSetChanged();
     }
 
     private void displayError(String message) {
