@@ -21,3 +21,7 @@ La solucion debe contemplar todos los elementos que hemos visto hasta ahora:
 
 #Integrantes: 
 - Guillermo Pérez
+
+#TODO
+- validacion al crear y guardar
+- confirm on delete

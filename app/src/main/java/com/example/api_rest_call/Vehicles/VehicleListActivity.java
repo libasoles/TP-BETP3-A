@@ -26,18 +26,19 @@ public class VehicleListActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        setTheme(R.style.AppTheme);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_vehicles_list);
         setTitle("Listado de vehículos");
 
         repository = new VehicleRepository();
 
-        setView();
+        setListView();
 
         this.fetchVehiclesList();
     }
 
-    private void setView() {
+    private void setListView() {
         viewListAdapter = new VehicleViewListAdapter(this, vehicles);
         listView = findViewById(R.id.vehicles_list);
         listView.setAdapter(viewListAdapter);
