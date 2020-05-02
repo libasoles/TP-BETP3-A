@@ -41,7 +41,6 @@ public class VehicleListActivity extends AppCompatActivity {
         viewListAdapter = new VehicleViewListAdapter(this, vehicles);
         listView = findViewById(R.id.vehicles_list);
         listView.setAdapter(viewListAdapter);
-        listView.setClickable(true);
         listView.setOnItemClickListener(onItemClick());
     }
 
@@ -64,19 +63,16 @@ public class VehicleListActivity extends AppCompatActivity {
     }
 
     private AdapterView.OnItemClickListener onItemClick() {
-        return new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Vehicle vehicle = (Vehicle) adapterView.getItemAtPosition(i);
-                redirectToDetailsView(vehicle);
-            }
-
-            private void redirectToDetailsView(Vehicle vehicle) {
-                Intent intent = new Intent(VehicleListActivity.this, VehicleDetailActivity.class);
-                intent.putExtra("id", vehicle.getId());
-                startActivity(intent);
-            }
+        return (adapterView, view, i, l) -> {
+            Vehicle vehicle = (Vehicle) adapterView.getItemAtPosition(i);
+            redirectToDetailsView(vehicle);
         };
+    }
+
+    private void redirectToDetailsView(Vehicle vehicle) {
+        Intent intent = new Intent(VehicleListActivity.this, VehicleDetailActivity.class);
+        intent.putExtra("id", vehicle.getId());
+        startActivity(intent);
     }
 
     public void onCreateButtonClicked(View view) {
