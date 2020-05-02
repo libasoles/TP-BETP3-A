@@ -4,7 +4,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
@@ -16,8 +15,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.example.api_rest_call.R;
-import com.example.api_rest_call.Services.VehicleRepository.OnError;
-import com.example.api_rest_call.Services.VehicleRepository.OnSuccess;
 import com.example.api_rest_call.Services.VehicleRepository.VehicleRepository;
 
 public class VehicleListActivity extends AppCompatActivity {
@@ -37,10 +34,7 @@ public class VehicleListActivity extends AppCompatActivity {
 
         setView();
 
-        this.fetchVehiclesList(
-                (List<Vehicle> vehicles) -> populateList(vehicles),
-                () -> displayError("Hubo un error leyendo los datos")
-        );
+        this.fetchVehiclesList();
     }
 
     private void setView() {
@@ -51,8 +45,11 @@ public class VehicleListActivity extends AppCompatActivity {
         listView.setOnItemClickListener(onItemClick());
     }
 
-    private void fetchVehiclesList(OnSuccess<List<Vehicle>> onSuccess, OnError onError) {
-        repository.getAll(onSuccess, onError);
+    private void fetchVehiclesList() {
+        repository.getAll(
+                (List<Vehicle> vehicles) -> populateList(vehicles),
+                () -> displayError("Hubo un error leyendo los datos")
+        );
     }
 
     private void populateList(List<Vehicle> vehicleList) {
@@ -83,7 +80,6 @@ public class VehicleListActivity extends AppCompatActivity {
     }
 
     public void onCreateButtonClicked(View view) {
-        Log.i("***", "click");
         redirectToCreateView();
     }
 

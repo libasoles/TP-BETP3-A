@@ -10,8 +10,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.api_rest_call.R;
-import com.example.api_rest_call.Services.VehicleRepository.OnError;
-import com.example.api_rest_call.Services.VehicleRepository.OnSuccess;
 import com.example.api_rest_call.Services.VehicleRepository.VehicleRepository;
 import com.google.android.material.textfield.TextInputEditText;
 
@@ -33,18 +31,14 @@ public class EditVehicleActivity extends AppCompatActivity {
 
         String vehicle_id = getIntent().getStringExtra("id");
 
-        fetchVehicle(
-                vehicle_id,
-                (Vehicle vehicle) -> populateView(vehicle),
-                () -> displayError("Hubo un error leyendo los datos")
-        );
+        fetchVehicle(vehicle_id);
     }
 
-    private void fetchVehicle(String id, OnSuccess<Vehicle> onSuccess, OnError onError) {
+    private void fetchVehicle(String id) {
         repository.getById(
                 id,
-                onSuccess,
-                onError
+                (Vehicle vehicle) -> populateView(vehicle),
+                () -> displayError("Hubo un error leyendo los datos")
         );
     }
 

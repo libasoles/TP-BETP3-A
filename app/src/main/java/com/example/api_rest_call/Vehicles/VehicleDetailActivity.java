@@ -9,8 +9,6 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.api_rest_call.Services.VehicleRepository.OnError;
-import com.example.api_rest_call.Services.VehicleRepository.OnSuccess;
 import com.example.api_rest_call.Services.VehicleRepository.VehicleRepository;
 
 import com.example.api_rest_call.R;
@@ -33,17 +31,14 @@ public class VehicleDetailActivity extends AppCompatActivity {
 
         repository = new VehicleRepository();
 
-        fetchVehicle(
-                (Vehicle vehicle) -> populateView(vehicle),
-                () -> displayError("Hubo un error leyendo los datos")
-        );
+        fetchVehicle();
     }
 
-    private void fetchVehicle(OnSuccess<Vehicle> onSuccess, OnError onError) {
+    private void fetchVehicle() {
         repository.getById(
                 vehicle_id,
-                onSuccess,
-                onError
+                (Vehicle vehicle) -> populateView(vehicle),
+                () -> displayError("Hubo un error leyendo los datos")
         );
     }
 
