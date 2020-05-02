@@ -19,9 +19,8 @@ La solucion debe contemplar todos los elementos que hemos visto hasta ahora:
 ## Fecha de entrega
 - 10 de Mayo 2020.
 
-#Integrantes: 
+# Integrantes: 
 - Guillermo Pérez
 
-#TODO
+# TODO
 - validacion al crear y guardar
-- confirm on delete

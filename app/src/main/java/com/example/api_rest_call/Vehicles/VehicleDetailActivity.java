@@ -1,5 +1,6 @@
 package com.example.api_rest_call.Vehicles;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -15,7 +16,7 @@ import com.example.api_rest_call.R;
 
 public class VehicleDetailActivity extends AppCompatActivity {
 
-    String vehicle_id;
+    Vehicle vehicle;
     VehicleRepository repository;
 
     @Override
@@ -27,22 +28,22 @@ public class VehicleDetailActivity extends AppCompatActivity {
 
         setContentView(R.layout.loading);
 
-        vehicle_id = getIntent().getStringExtra("id");
-
         repository = new VehicleRepository();
-
-        fetchVehicle();
+        String vehicle_id = getIntent().getStringExtra("id");
+        fetchVehicle(vehicle_id);
     }
 
-    private void fetchVehicle() {
+    private void fetchVehicle(String id) {
         repository.getById(
-                vehicle_id,
+                id,
                 (Vehicle vehicle) -> populateView(vehicle),
                 () -> displayError("Hubo un error leyendo los datos")
         );
     }
 
     private void populateView(Vehicle vehicle) {
+        this.vehicle = vehicle;
+
         setContentView(R.layout.activity_vehicle_detail);
 
         TextView marca = findViewById(R.id.marca);
@@ -61,13 +62,25 @@ public class VehicleDetailActivity extends AppCompatActivity {
 
     public void onEditButtonClick(View view) {
         Intent intent = new Intent(this, EditVehicleActivity.class);
-        intent.putExtra("id", vehicle_id);
+        intent.putExtra("id", vehicle.getId());
         startActivity(intent);
     }
 
     public void onDeleteButtonClick(View view) {
+        new AlertDialog.Builder(this)
+                .setTitle("Delete")
+                .setMessage("Please confirm you want to delete " + vehicle.getModelo())
+                .setPositiveButton("Delete", (dialog, whichButton) -> {
+                    deleteVehicle();
+                    dialog.dismiss();
+                })
+                .setNegativeButton("Cancel", (dialog, which) -> dialog.dismiss())
+                .show();
+    }
+
+    private void deleteVehicle() {
         repository.delete(
-                vehicle_id,
+                vehicle.getId(),
                 (Void v) -> redirectToVehiclesList(),
                 () -> displayError("Hubo un error leyendo los datos")
         );

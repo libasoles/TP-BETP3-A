@@ -23,14 +23,12 @@ public class EditVehicleActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setTitle("Edición de vehículo");
 
-        repository = new VehicleRepository();
-
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         setContentView(R.layout.loading);
 
+        repository = new VehicleRepository();
         String vehicle_id = getIntent().getStringExtra("id");
-
         fetchVehicle(vehicle_id);
     }
 
