@@ -1,7 +1,5 @@
 package com.example.api_rest_call.Vehicles;
 
-import androidx.annotation.NonNull;
-
 public class Vehicle {
     private String id;
     private String marca;
@@ -35,11 +33,5 @@ public class Vehicle {
             throw new IllegalArgumentException();
 
         this.modelo = modelo;
-    }
-
-    @NonNull
-    @Override
-    public String toString() {
-        return super.toString();
     }
 }

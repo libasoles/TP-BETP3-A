@@ -19,10 +19,10 @@ import com.example.api_rest_call.Services.VehicleRepository.VehicleRepository;
 
 public class VehicleListActivity extends AppCompatActivity {
 
-    ListView listView;
-    ListAdapter viewListAdapter;
-    ArrayList<Vehicle> vehicles = new ArrayList<>();
-    VehicleRepository repository;
+    private ListView listView;
+    private ListAdapter viewListAdapter;
+    private ArrayList<Vehicle> vehicles = new ArrayList<>();
+    private VehicleRepository repository;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,7 +45,7 @@ public class VehicleListActivity extends AppCompatActivity {
     }
 
     private void populateList(List<Vehicle> vehicleList) {
-        if(listView == null) {
+        if (listView == null) {
             setListView();
         }
 

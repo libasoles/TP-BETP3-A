@@ -14,7 +14,7 @@ import com.google.android.material.textfield.TextInputEditText;
 
 public class CreateVehicleActivity extends AppCompatActivity {
 
-    VehicleRepository repository;
+    private VehicleRepository repository;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,22 +35,21 @@ public class CreateVehicleActivity extends AppCompatActivity {
         return true;
     }
 
-    public boolean onCancelButtonClick(View view) {
+    public void onCancelButtonClick(View view) {
         finish();
-        return true;
     }
 
-    public boolean onSaveButtonClick(View view) {
-        String marca = ((TextInputEditText) findViewById(R.id.marca)).getText().toString();
-        String modelo = ((TextInputEditText) findViewById(R.id.modelo)).getText().toString();
+    public void onSaveButtonClick(View view) {
+        String brand = ((TextInputEditText) findViewById(R.id.brand)).getText().toString();
+        String model = ((TextInputEditText) findViewById(R.id.model)).getText().toString();
 
         Vehicle vehicle = new Vehicle();
         try {
-            vehicle.setMarca(marca);
-            vehicle.setModelo(modelo);
+            vehicle.setMarca(brand);
+            vehicle.setModelo(model);
         } catch (IllegalArgumentException e) {
             displayError("Todos los campos son obligatorios");
-            return false;
+            return;
         }
 
         repository.create(
@@ -58,8 +57,6 @@ public class CreateVehicleActivity extends AppCompatActivity {
                 (Void v) -> redirectToListView(),
                 () -> displayError("Hubo un error guardando los datos")
         );
-
-        return true;
     }
 
     private void redirectToListView() {

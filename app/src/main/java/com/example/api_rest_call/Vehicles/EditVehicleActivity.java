@@ -15,8 +15,8 @@ import com.google.android.material.textfield.TextInputEditText;
 
 public class EditVehicleActivity extends AppCompatActivity {
 
-    Vehicle vehicle;
-    VehicleRepository repository;
+    private Vehicle vehicle;
+    private VehicleRepository repository;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,20 +35,21 @@ public class EditVehicleActivity extends AppCompatActivity {
     private void fetchVehicle(String id) {
         repository.getById(
                 id,
-                (Vehicle vehicle) -> populateView(vehicle),
+                this::populateView,
                 () -> displayError("Hubo un error leyendo los datos")
         );
     }
 
     private void populateView(Vehicle vehicle) {
         this.vehicle = vehicle;
+
         setContentView(R.layout.activity_vehicle_edition);
 
-        TextView marca = findViewById(R.id.marca);
-        TextView modelo = findViewById(R.id.modelo);
+        TextView brand = findViewById(R.id.brand);
+        TextView model = findViewById(R.id.model);
 
-        marca.setText(vehicle.getMarca());
-        modelo.setText(vehicle.getModelo());
+        brand.setText(vehicle.getMarca());
+        model.setText(vehicle.getModelo());
     }
 
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -58,21 +59,20 @@ public class EditVehicleActivity extends AppCompatActivity {
         return true;
     }
 
-    public boolean onCancelButtonClick(View view) {
+    public void onCancelButtonClick(View view) {
         finish();
-        return true;
     }
 
-    public boolean onSaveButtonClick(View view) {
-        String marca = ((TextInputEditText) findViewById(R.id.marca)).getText().toString();
-        String modelo = ((TextInputEditText) findViewById(R.id.modelo)).getText().toString();
+    public void onSaveButtonClick(View view) {
+        String marca = ((TextInputEditText) findViewById(R.id.brand)).getText().toString();
+        String modelo = ((TextInputEditText) findViewById(R.id.model)).getText().toString();
 
         try {
             vehicle.setMarca(marca);
             vehicle.setModelo(modelo);
         } catch (IllegalArgumentException e) {
             displayError("Todos los campos son obligatorios");
-            return false;
+            return;
         }
 
         repository.update(
@@ -80,8 +80,6 @@ public class EditVehicleActivity extends AppCompatActivity {
                 (Void v) -> redirectToDetailsView(),
                 () -> displayError("Hubo un error guardando los datos")
         );
-
-        return true;
     }
 
     private void redirectToDetailsView() {

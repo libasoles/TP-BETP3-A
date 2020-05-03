@@ -16,8 +16,8 @@ import com.example.api_rest_call.R;
 
 public class VehicleDetailActivity extends AppCompatActivity {
 
-    Vehicle vehicle;
-    VehicleRepository repository;
+    private Vehicle vehicle;
+    private VehicleRepository repository;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,7 +36,7 @@ public class VehicleDetailActivity extends AppCompatActivity {
     private void fetchVehicle(String id) {
         repository.getById(
                 id,
-                (Vehicle vehicle) -> populateView(vehicle),
+                this::populateView,
                 () -> displayError("Hubo un error leyendo los datos")
         );
     }
@@ -46,11 +46,11 @@ public class VehicleDetailActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_vehicle_detail);
 
-        TextView marca = findViewById(R.id.marca);
-        TextView modelo = findViewById(R.id.modelo);
+        TextView brand = findViewById(R.id.brand);
+        TextView model = findViewById(R.id.model);
 
-        marca.setText(vehicle.getMarca());
-        modelo.setText(vehicle.getModelo());
+        brand.setText(vehicle.getMarca());
+        model.setText(vehicle.getModelo());
     }
 
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -69,13 +69,13 @@ public class VehicleDetailActivity extends AppCompatActivity {
 
     public void onDeleteButtonClick(View view) {
         new AlertDialog.Builder(this)
-                .setTitle("Delete")
-                .setMessage("Please confirm you want to delete " + vehicle.getModelo())
-                .setPositiveButton("Delete", (dialog, whichButton) -> {
+                .setTitle("Borrar?")
+                .setMessage("Por favor confirma que quieres eliminar el modelo " + vehicle.getModelo())
+                .setPositiveButton("Borrar", (dialog, whichButton) -> {
                     deleteVehicle();
                     dialog.dismiss();
                 })
-                .setNegativeButton("Cancel", (dialog, which) -> dialog.dismiss())
+                .setNegativeButton("Cancelar", (dialog, which) -> dialog.dismiss())
                 .show();
     }
 

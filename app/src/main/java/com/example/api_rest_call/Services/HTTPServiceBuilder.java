@@ -6,7 +6,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class HTTPServiceBuilder {
     private static final String URL = "https://us-central1-be-tp3-a.cloudfunctions.net/";
 
-    private static Retrofit retrofit = new Retrofit.Builder()
+    private static final Retrofit retrofit = new Retrofit.Builder()
             .baseUrl(URL)
             .addConverterFactory(GsonConverterFactory.create())
             .build();

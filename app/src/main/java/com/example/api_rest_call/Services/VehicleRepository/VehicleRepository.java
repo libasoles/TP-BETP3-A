@@ -13,7 +13,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class VehicleRepository {
-    VehicleHTTPService vehicleHTTPService;
+    private final VehicleHTTPService vehicleHTTPService;
 
     public VehicleRepository() {
         vehicleHTTPService = HTTPServiceBuilder.buildService(VehicleHTTPService.class);

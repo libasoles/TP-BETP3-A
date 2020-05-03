@@ -5,7 +5,7 @@
     android:paddingVertical="16dp">
 
     <TextView
-        android:id="@+id/marca"
+        android:id="@+id/brand"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="10dp"
@@ -13,7 +13,7 @@
         android:textSize="18sp" />
 
     <TextView
-        android:id="@+id/modelo"
+        android:id="@+id/model"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="16sp" />

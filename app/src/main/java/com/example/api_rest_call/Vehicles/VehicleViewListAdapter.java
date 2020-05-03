@@ -11,7 +11,7 @@ import com.example.api_rest_call.R;
 
 import java.util.ArrayList;
 
-public class VehicleViewListAdapter extends ArrayAdapter<Vehicle> {
+class VehicleViewListAdapter extends ArrayAdapter<Vehicle> {
     public VehicleViewListAdapter(Context context, ArrayList<Vehicle> vehicles) {
         super(context, 0, vehicles);
     }
@@ -23,11 +23,11 @@ public class VehicleViewListAdapter extends ArrayAdapter<Vehicle> {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.list_item_vehicle, parent, false);
         }
 
-        TextView marca = convertView.findViewById(R.id.marca);
-        TextView modelo = convertView.findViewById(R.id.modelo);
+        TextView brand = convertView.findViewById(R.id.brand);
+        TextView model = convertView.findViewById(R.id.model);
 
-        marca.setText(vehicle.getMarca());
-        modelo.setText(vehicle.getModelo());
+        brand.setText(vehicle.getMarca());
+        model.setText(vehicle.getModelo());
 
         return convertView;
     }
