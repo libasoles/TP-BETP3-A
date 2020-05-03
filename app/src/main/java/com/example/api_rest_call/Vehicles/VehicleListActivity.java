@@ -21,7 +21,7 @@ public class VehicleListActivity extends AppCompatActivity {
 
     ListView listView;
     ListAdapter viewListAdapter;
-    ArrayList<Vehicle> vehicles = new ArrayList();
+    ArrayList<Vehicle> vehicles = new ArrayList<>();
     VehicleRepository repository;
 
     @Override
@@ -37,18 +37,9 @@ public class VehicleListActivity extends AppCompatActivity {
         this.fetchVehiclesList();
     }
 
-    private void setListView() {
-        setContentView(R.layout.activity_vehicles_list);
-
-        viewListAdapter = new VehicleViewListAdapter(this, vehicles);
-        listView = findViewById(R.id.vehicles_list);
-        listView.setAdapter(viewListAdapter);
-        listView.setOnItemClickListener(onItemClick());
-    }
-
     private void fetchVehiclesList() {
         repository.getAll(
-                (List<Vehicle> vehicles) -> populateList(vehicles),
+                this::populateList,
                 () -> displayError("Hubo un error leyendo los datos")
         );
     }
@@ -57,10 +48,20 @@ public class VehicleListActivity extends AppCompatActivity {
         if(listView == null) {
             setListView();
         }
+
         vehicles.clear();
         vehicles.addAll(vehicleList);
 
         ((BaseAdapter) viewListAdapter).notifyDataSetChanged();
+    }
+
+    private void setListView() {
+        setContentView(R.layout.activity_vehicles_list);
+
+        viewListAdapter = new VehicleViewListAdapter(this, vehicles);
+        listView = findViewById(R.id.vehicles_list);
+        listView.setAdapter(viewListAdapter);
+        listView.setOnItemClickListener(onItemClick());
     }
 
     private void displayError(String message) {
