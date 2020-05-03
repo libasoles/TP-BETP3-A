@@ -28,17 +28,18 @@ public class VehicleListActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         setTheme(R.style.AppTheme);
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_vehicles_list);
+
         setTitle("Listado de vehículos");
 
+        setContentView(R.layout.loading);
+
         repository = new VehicleRepository();
-
-        setListView();
-
         this.fetchVehiclesList();
     }
 
     private void setListView() {
+        setContentView(R.layout.activity_vehicles_list);
+
         viewListAdapter = new VehicleViewListAdapter(this, vehicles);
         listView = findViewById(R.id.vehicles_list);
         listView.setAdapter(viewListAdapter);
@@ -53,6 +54,9 @@ public class VehicleListActivity extends AppCompatActivity {
     }
 
     private void populateList(List<Vehicle> vehicleList) {
+        if(listView == null) {
+            setListView();
+        }
         vehicles.clear();
         vehicles.addAll(vehicleList);
 

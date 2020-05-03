@@ -2,6 +2,7 @@
     <string name="app_name">ABM de Vehiculos</string>
     <string name="brand">Marca</string>
     <string name="model">Modelo</string>
+    <string name="loading">Cargando...</string>
     <string name="create">Crear</string>
     <string name="save">Guardar</string>
     <string name="cancel">Cancelar</string>
