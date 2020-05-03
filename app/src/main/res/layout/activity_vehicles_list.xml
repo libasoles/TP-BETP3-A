@@ -1,31 +1,26 @@
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".Vehicles.VehicleListActivity">
+    android:layout_height="match_parent">
 
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:orientation="vertical"
-        tools:ignore="MissingConstraints">
+        android:orientation="vertical">
 
         <ListView
             android:id="@+id/vehicles_list"
             android:layout_width="fill_parent"
             android:layout_height="550dp" />
-
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/fab"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            app:fabCustomSize="50dp"
-            android:layout_gravity="end|bottom"
-            android:layout_marginEnd="16dp"
-            android:contentDescription="@string/create"
-            android:onClick="onCreateButtonClicked"
-            android:src="@drawable/ic_add_white_24dp" />
     </LinearLayout>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right|bottom"
+        android:layout_margin="16dp"
+        android:contentDescription="@string/create"
+        android:onClick="onCreateButtonClicked"
+        android:src="@drawable/ic_add_white_24dp" />
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
